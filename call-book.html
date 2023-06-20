@@ -1,48 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>book-a-call</title>
-    <style>
-        h1{
-            text-align: center;
-            color: black;
-        }
-        .container{
-            background-color: cadetblue;
-            text-align: center;
-            max-width: 500px;
-            background-position: center;
-            padding:200px;
-           display: block;
-            height: fit-content;
-            
-        }
-        form{
-            text-align: center;
-            
-        }
-        input[type="submit"]{
-            background-color: forestgreen;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Form</title>
+  <style>
+    ul {
+      list-style-type: none;
+    }
+  </style>
 </head>
 <body>
-    <h1><b>Book-a-call</b></h1>
-    <div class="container">
-        <h2>Add user</h2>
-        <form id="booking-form">
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" required><br>
-          
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" required><br>
-          <br>
-            <input type="submit" value="Submit">
-          </form>
-          
-    </div>
-    <script src="app.js"></script>
+  <h2>Booking Form</h2>
+  
+  <form id="bookingForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    <br>
+    <input type="submit" value="Add User">
+  </form>
+  
+  <h3>Booked Users:</h3>
+  <ul id="userList"></ul>
+  
+  <script>
+    // Function to handle form submission
+    function addUser(e) {
+      e.preventDefault();
+      
+      // Get input values
+      var usernameInput = document.getElementById('username');
+      var emailInput = document.getElementById('email');
+      var username = usernameInput.value;
+      var email = emailInput.value;
+      
+      // Create user object
+      var user = {
+        username: username,
+        email: email
+      };
+      
+      // Get existing users from local storage or initialize an empty array
+      var users = JSON.parse(localStorage.getItem('users')) || [];
+      
+      // Add the new user to the array
+      users.push(user);
+      
+      // Store the updated users array in local storage
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // Display the user on the screen
+      displayUser(user);
+      
+      // Clear the form inputs
+      usernameInput.value = '';
+      emailInput.value = '';
+    }
+    
+    // Function to display a user on the screen
+    function displayUser(user) {
+      var userList = document.getElementById('userList');
+      
+      // Create list item for the user
+      var listItem = document.createElement('li');
+      listItem.textContent = 'Username: ' + user.username + ', Email: ' + user.email;
+      
+      // Append the list item to the user list
+      userList.appendChild(listItem);
+    }
+    
+    // Retrieve existing users from local storage and display them on page load
+    window.addEventListener('load', function() {
+      var users = JSON.parse(localStorage.getItem('users')) || [];
+      
+      // Display each user on the screen
+      users.forEach(function(user) {
+        displayUser(user);
+      });
+    });
+    
+    // Add form submission event listener
+    var bookingForm = document.getElementById('bookingForm');
+    bookingForm.addEventListener('submit', addUser);
+  </script>
 </body>
 </html>
