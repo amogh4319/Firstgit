@@ -67,9 +67,32 @@
       // Create list item for the user
       var listItem = document.createElement('li');
       listItem.textContent = 'Username: ' + user.username + ', Email: ' + user.email;
+
+      var deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.addEventListener('click', function() {
+        deleteUser(user);
+        listItem.remove();
+      });
+      
+      // Append the delete button to the list item
+      listItem.appendChild(deleteButton);
       
       // Append the list item to the user list
       userList.appendChild(listItem);
+    }
+    // Function to delete a user
+    function deleteUser(user) {
+      var users = JSON.parse(localStorage.getItem('users')) || [];
+      
+      // Find the index of the user in the users array
+      var userIndex = users.findIndex(function(u) {
+        return u.username === user.username && u.email === user.email;
+      });
+      if (userIndex !== -1) {
+        users.splice(userIndex, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+      }
     }
     
     // Retrieve existing users from local storage and display them on page load
