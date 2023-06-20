@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book-a-call</title>
+    <style>
+        h1{
+            text-align: center;
+            color: black;
+        }
+        .container{
+            background-color: cadetblue;
+            text-align: center;
+            max-width: 500px;
+            background-position: center;
+            padding:200px;
+           display: block;
+            height: fit-content;
+            
+        }
+        form{
+            text-align: center;
+            
+        }
+        input[type="submit"]{
+            background-color: forestgreen;
+        }
+    </style>
+</head>
+<body>
+    <h1><b>Book-a-call</b></h1>
+    <div class="container">
+        <h2>Add user</h2>
+        <form id="booking-form">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" required><br>
+          
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" required><br>
+          <br>
+            <input type="submit" value="Submit">
+          </form>
+          
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
