@@ -66,7 +66,23 @@
       
       // Create list item for the user
       var listItem = document.createElement('li');
-      listItem.textContent = 'Username: ' + user.username + ', Email: ' + user.email;
+       // Create username span
+       var usernameSpan = document.createElement('span');
+      usernameSpan.textContent = 'Username: ' + user.username + ', ';
+      listItem.appendChild(usernameSpan);
+      
+      // Create email span
+      var emailSpan = document.createElement('span');
+      emailSpan.textContent = 'Email: ' + user.email;
+      listItem.appendChild(emailSpan);
+
+      // Create edit button
+      var editButton = document.createElement('button');
+      editButton.textContent = 'Edit';
+      editButton.addEventListener('click', function() {
+        editUser(user);
+      });
+      listItem.appendChild(editButton);
 
       var deleteButton = document.createElement('button');
       deleteButton.textContent = 'Delete';
@@ -94,8 +110,21 @@
         localStorage.setItem('users', JSON.stringify(users));
       }
     }
+    function editUser(user) {
+      var email = prompt('Enter the new email address:');
+      
+      if (email !== null && email.trim() !== '') {
+        var users = JSON.parse(localStorage.getItem('users')) || [];
+        
+        // Find the index of the user in the users array
+        var userIndex = users.findIndex(function(u) {
+          return u.username === user.username && u.email === user.email;
+        });
+    }
+}
+
     
-    // Retrieve existing users from local storage and display them on page load
+   // Retrieve existing users from local storage and display them on page load
     window.addEventListener('load', function() {
       var users = JSON.parse(localStorage.getItem('users')) || [];
       
