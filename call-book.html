@@ -25,7 +25,7 @@
   
   <h3>Booked Users:</h3>
   <ul id="userList"></ul>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script>
     // Function to handle form submission
     function addUser(e) {
@@ -49,11 +49,19 @@
       // Add the new user to the array
       users.push(user);
       
-      // Store the updated users array in local storage
-      localStorage.setItem('users', JSON.stringify(users));
+      // // Store the updated users array in local storage
+      // localStorage.setItem('users', JSON.stringify(users));
       
-      // Display the user on the screen
-      displayUser(user);
+      axios.post('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData',user)
+      .then(res=>{
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log(err)
+      });
+
+      // // Display the user on the screen
+       displayUser(user);
       
       // Clear the form inputs
       usernameInput.value = '';
