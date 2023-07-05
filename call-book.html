@@ -133,14 +133,29 @@
 
     
    // Retrieve existing users from local storage and display them on page load
-    window.addEventListener('load', function() {
-      var users = JSON.parse(localStorage.getItem('users')) || [];
+    window.addEventListener("DOMContentLoaded", ()=>{
+    //   var users = JSON.parse(localStorage.getItem('users')) || [];
       
-      // Display each user on the screen
-      users.forEach(function(user) {
-        displayUser(user);
-      });
-    });
+    //   // Display each user on the screen
+    //   users.forEach(function(user) {
+    //     displayUser(user);
+    //   });
+    // });
+
+    axios.get("https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData")
+    .then(res=>{
+      console.log(res)
+       
+      for(var i=0;i<res.data.length;i++){
+        displayUser(res.data[i]);
+      }
+      
+
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  })
     
     // Add form submission event listener
     var bookingForm = document.getElementById('bookingForm');
