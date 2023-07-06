@@ -39,21 +39,14 @@
       
       // Create user object
       var user = {
-        _id:id,
+        //_id:userId,
         username: username,
         email: email
       };
       
-      // Get existing users from local storage or initialize an empty array
-      var users = JSON.parse(localStorage.getItem('users')) || [];
+   
       
-      // Add the new user to the array
-      users.push(user);
-      
-      // // Store the updated users array in local storage
-      // localStorage.setItem('users', JSON.stringify(users));
-      
-      axios.post('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData',user)
+      axios.post('https://crudcrud.com/api/934ec2e681544ba19bd3eb09a031d8b7/appiontmentData',user)
       .then(res=>{
         console.log(res)
       })
@@ -89,32 +82,22 @@
       var editButton = document.createElement('button');
       editButton.textContent = 'Edit';
       editButton.addEventListener('click', function() {
-        // Prompt user for new description
-        const name = prompt('Enter the corrected description:');
-        const email=prompt('enter correct email');
-  
-        // Update the description span
-       // usernameSpan.textContent = newDescription;
-  
-        // Update the item object
-        //user.username = newDescription;
-
         
-    var updatedUser = {
-      //_id:id,
-      username:name,
-      email:email
-    };
-  
+            deleteUser(user);
+            listItem.remove();
+            document.getElementById('username').value=user.username;
+            document.getElementById('email').value=user.email;
+            axios.put(`https://crudcrud.com/api/934ec2e681544ba19bd3eb09a031d8b7/appiontmentData/${user._id}`,user)
+            .then(res=>{
+              console.log("Username:"+res.data.username+"Email:"+res.data.email);
+            })
+            .catch(err=>{
+              console.log(err);
+            })
+              
+            })
+        
 
-        axios.put(`https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/${user._id}`,updatedUser)
-  .then(res=>{
-    console.log("Username:"+res.data);
-  })
-  .catch(err=>{
-    console.log(err);
-  })
-})    
       listItem.appendChild(editButton);
 
       var deleteButton = document.createElement('button');
@@ -132,72 +115,34 @@
     }
     // Function to delete a user
     function deleteUser(user) {
-      // var users = JSON.parse(localStorage.getItem('users')) || [];
       
-      // // Find the index of the user in the users array
-      // var userIndex = users.findIndex(function(u) {
-      //   return u.username === user.username && u.email === user.email;
-      // });
-      // if (userIndex !== -1) {
-      //   users.splice(userIndex, 1);
-      //   localStorage.setItem('users', JSON.stringify(users));
-      // }
-      axios.delete('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/64a5a5a8c632b703e83093e6')
+      axios.delete(`https://crudcrud.com/api/934ec2e681544ba19bd3eb09a031d8b7/appiontmentData/${user._id}`)
      
       .then(res=>{console.log(res)})
       .catch(err=>{console.log(err)});
     }
-  //   function editUser(user) {
-  // var name = prompt('Enter the new username:');
 
-  // if (name !== null && name.trim() !== '') {
-  //   var users = JSON.parse(localStorage.getItem('users')) || [];
-
-  //   var userIndex = users.findIndex(function(u) {
-  //     return u.username === user.username && u.email === user.email;
-  //   });
-
-  //   if (userIndex !== -1) {
-  //     users[userIndex].username = username;
-
-  //     localStorage.setItem('users', JSON.stringify(users));
-  //   }
-  // }
-//   axios.put('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/64a5a69fc632b703e83093e8')
-//   .then(res=>{
-//     console.log(res);
-//   })
-//   .catch(err=>{
-//     console.log(err);
-//   })
-// //}
 
 
     
    // Retrieve existing users from local storage and display them on page load
-    window.addEventListener("DOMContentLoaded", ()=>{
-    //   var users = JSON.parse(localStorage.getItem('users')) || [];
-      
-    //   // Display each user on the screen
-    //   users.forEach(function(user) {
-    //     displayUser(user);
-    //   });
-    // });
+    
+   
+  window.addEventListener("DOMContentLoaded", ()=>{
+    axios.get("https://crudcrud.com/api/934ec2e681544ba19bd3eb09a031d8b7/appiontmentData")
+            .then(res=>{
+              console.log(res)
+              
+              for(var i=0;i<res.data.length;i++){
+                displayUser(res.data[i]);
+              }
+              
 
-    axios.get("https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData")
-    .then(res=>{
-      console.log(res)
-       
-      for(var i=0;i<res.data.length;i++){
-        displayUser(res.data[i]);
-      }
-      
-
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  })
+            })
+            .catch(err=>{
+              console.log(err);
+            })
+          })
     
     // Add form submission event listener
     var bookingForm = document.getElementById('bookingForm');
