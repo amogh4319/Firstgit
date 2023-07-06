@@ -39,6 +39,7 @@
       
       // Create user object
       var user = {
+        _id:id,
         username: username,
         email: email
       };
@@ -88,8 +89,32 @@
       var editButton = document.createElement('button');
       editButton.textContent = 'Edit';
       editButton.addEventListener('click', function() {
-        editUser(user);
-      });
+        // Prompt user for new description
+        const name = prompt('Enter the corrected description:');
+        const email=prompt('enter correct email');
+  
+        // Update the description span
+       // usernameSpan.textContent = newDescription;
+  
+        // Update the item object
+        //user.username = newDescription;
+
+        
+    var updatedUser = {
+      //_id:id,
+      username:name,
+      email:email
+    };
+  
+
+        axios.put(`https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/${user._id}`,updatedUser)
+  .then(res=>{
+    console.log("Username:"+res.data);
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+})    
       listItem.appendChild(editButton);
 
       var deleteButton = document.createElement('button');
@@ -122,8 +147,8 @@
       .then(res=>{console.log(res)})
       .catch(err=>{console.log(err)});
     }
-    function editUser(user) {
-  var name = prompt('Enter the new username:');
+  //   function editUser(user) {
+  // var name = prompt('Enter the new username:');
 
   // if (name !== null && name.trim() !== '') {
   //   var users = JSON.parse(localStorage.getItem('users')) || [];
@@ -138,17 +163,14 @@
   //     localStorage.setItem('users', JSON.stringify(users));
   //   }
   // }
-  axios.put('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/64a5a69fc632b703e83093e8',{
-    "username":"amrut",
-    "email":"amrut@gmail.com"
-  })
-  .then(res=>{
-    console.log(res);
-  })
-  .catch(err=>{
-    console.log(err);
-  })
-}
+//   axios.put('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/64a5a69fc632b703e83093e8')
+//   .then(res=>{
+//     console.log(res);
+//   })
+//   .catch(err=>{
+//     console.log(err);
+//   })
+// //}
 
 
     
@@ -181,5 +203,6 @@
     var bookingForm = document.getElementById('bookingForm');
     bookingForm.addEventListener('submit', addUser);
   </script>
+
 </body>
 </html>
