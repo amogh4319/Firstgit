@@ -123,17 +123,33 @@
       .catch(err=>{console.log(err)});
     }
     function editUser(user) {
-      var email = prompt('Enter the new email address:');
-      
-      if (email !== null && email.trim() !== '') {
-        var users = JSON.parse(localStorage.getItem('users')) || [];
-        
-        // Find the index of the user in the users array
-        var userIndex = users.findIndex(function(u) {
-          return u.username === user.username && u.email === user.email;
-        });
-    }
+  var name = prompt('Enter the new username:');
+
+  // if (name !== null && name.trim() !== '') {
+  //   var users = JSON.parse(localStorage.getItem('users')) || [];
+
+  //   var userIndex = users.findIndex(function(u) {
+  //     return u.username === user.username && u.email === user.email;
+  //   });
+
+  //   if (userIndex !== -1) {
+  //     users[userIndex].username = username;
+
+  //     localStorage.setItem('users', JSON.stringify(users));
+  //   }
+  // }
+  axios.put('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/64a5a69fc632b703e83093e8',{
+    "username":"amrut",
+    "email":"amrut@gmail.com"
+  })
+  .then(res=>{
+    console.log(res);
+  })
+  .catch(err=>{
+    console.log(err);
+  })
 }
+
 
     
    // Retrieve existing users from local storage and display them on page load
