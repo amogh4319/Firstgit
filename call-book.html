@@ -107,16 +107,20 @@
     }
     // Function to delete a user
     function deleteUser(user) {
-      var users = JSON.parse(localStorage.getItem('users')) || [];
+      // var users = JSON.parse(localStorage.getItem('users')) || [];
       
-      // Find the index of the user in the users array
-      var userIndex = users.findIndex(function(u) {
-        return u.username === user.username && u.email === user.email;
-      });
-      if (userIndex !== -1) {
-        users.splice(userIndex, 1);
-        localStorage.setItem('users', JSON.stringify(users));
-      }
+      // // Find the index of the user in the users array
+      // var userIndex = users.findIndex(function(u) {
+      //   return u.username === user.username && u.email === user.email;
+      // });
+      // if (userIndex !== -1) {
+      //   users.splice(userIndex, 1);
+      //   localStorage.setItem('users', JSON.stringify(users));
+      // }
+      axios.delete('https://crudcrud.com/api/1f796ca65eb74305b57f58c46596d2a9/appiontmentData/64a5a5a8c632b703e83093e6')
+     
+      .then(res=>{console.log(res)})
+      .catch(err=>{console.log(err)});
     }
     function editUser(user) {
       var email = prompt('Enter the new email address:');
